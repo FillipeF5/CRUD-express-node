@@ -1,18 +1,14 @@
 const express = require("express");
+const { uuid } = require('uuidv4');
 const app = express();
 app.use(express.json());
 
-const paes =[
-    {
-        nome: "Pao",
-        peco: 2
-    }
-]
+const paes =[{ }]
 
-// CREATE
+//CREATE
 app.post('/paes', (req, res) => {
-    const { nome, preco } = req.body;
-    paes.push({ nome, preco });
+    const { nome, preco, id } = req.body;
+    paes.push({ nome, preco, id: uuid() });
     res.json(paes);
 });
 
@@ -21,16 +17,16 @@ app.get('/paes', (req,res) =>{
     res.json(paes);
 });
 
-//ATUALIZANDO
+//UPDATE
 app.put("/paes/:index", (req, res) => {
     const { index } = req.params;
-    const { nome, preco } = req.body;
-    paes[index] = ({ nome, preco });
+    const { nome, preco, id } = req.body;
+    paes[index] = ({ nome, preco, id: uuid() });
     
     res.json(paes)
-})
+});
 
-// DELETANDO
+//DELETE
 app.delete('/paes/:index', (req, res) => {
     const { index } = req.params;
     paes.splice(index, 1);
